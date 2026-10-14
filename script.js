@@ -54,7 +54,7 @@ form.addEventListener("submit", (event) => {
     status: statusInput.value,
   };
 
-    applications = [newApplication, ...applications];
+  applications = [newApplication, ...applications];
   saveApplications();
   function loadApplications() {
   const savedApplications = localStorage.getItem("jobApplications");
