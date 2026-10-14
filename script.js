@@ -1,3 +1,4 @@
+
 const form = document.querySelector("#application-form");
 const companyInput = document.querySelector("#company");
 const roleInput = document.querySelector("#role");
@@ -6,8 +7,22 @@ const applicationCount = document.querySelector("#application-count");
 const applicationsList = document.querySelector("#applications-list");
 
 let applications = [];
+
 function saveApplications() {
   localStorage.setItem("jobApplications", JSON.stringify(applications));
+}
+
+function loadApplications() {
+  const savedApplications = localStorage.getItem("jobApplications");
+
+  if (savedApplications) {
+    try {
+      applications = JSON.parse(savedApplications);
+    } catch (error) {
+      console.error("Could not load saved applications:", error);
+      applications = [];
+    }
+  }
 }
 
 function renderApplications() {
@@ -16,7 +31,8 @@ function renderApplications() {
 
   if (applications.length === 0) {
     const emptyMessage = document.createElement("p");
-    emptyMessage.textContent = "No applications yet. Add your first one above.";
+    emptyMessage.textContent =
+      "No applications yet. Add your first one above.";
     applicationsList.appendChild(emptyMessage);
     return;
   }
@@ -34,6 +50,7 @@ function renderApplications() {
     card.appendChild(companyHeading);
     card.appendChild(roleText);
     card.appendChild(statusText);
+
     applicationsList.appendChild(card);
   }
 }
@@ -55,21 +72,8 @@ form.addEventListener("submit", (event) => {
   };
 
   applications = [newApplication, ...applications];
+
   saveApplications();
-  
-function loadApplications() {
-  const savedApplications = localStorage.getItem("jobApplications");
-
-  if (savedApplications) {
-    try {
-      applications = JSON.parse(savedApplications);
-    } catch (error) {
-      console.error("Could not load saved applications:", error);
-      applications = [];
-    }
-  }
-}
-
   renderApplications();
 
   companyInput.value = "";
@@ -78,5 +82,6 @@ function loadApplications() {
   companyInput.focus();
 });
 
+// Load saved data BEFORE rendering.
 loadApplications();
 renderApplications();
