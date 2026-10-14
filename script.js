@@ -6,6 +6,9 @@ const applicationCount = document.querySelector("#application-count");
 const applicationsList = document.querySelector("#applications-list");
 
 let applications = [];
+function saveApplications() {
+  localStorage.setItem("jobApplications", JSON.stringify(applications));
+}
 
 function renderApplications() {
   applicationsList.replaceChildren();
@@ -51,7 +54,8 @@ form.addEventListener("submit", (event) => {
     status: statusInput.value,
   };
 
-  applications = [newApplication, ...applications];
+    applications = [newApplication, ...applications];
+  saveApplications();
   renderApplications();
 
   companyInput.value = "";
