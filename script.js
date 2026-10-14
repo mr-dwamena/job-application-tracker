@@ -56,6 +56,20 @@ form.addEventListener("submit", (event) => {
 
   applications = [newApplication, ...applications];
   saveApplications();
+  
+function loadApplications() {
+  const savedApplications = localStorage.getItem("jobApplications");
+
+  if (savedApplications) {
+    try {
+      applications = JSON.parse(savedApplications);
+    } catch (error) {
+      console.error("Could not load saved applications:", error);
+      applications = [];
+    }
+  }
+}
+
   renderApplications();
 
   companyInput.value = "";
