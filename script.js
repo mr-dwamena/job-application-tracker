@@ -56,13 +56,6 @@ form.addEventListener("submit", (event) => {
 
   applications = [newApplication, ...applications];
   saveApplications();
-  function loadApplications() {
-  const savedApplications = localStorage.getItem("jobApplications");
-
-  if (savedApplications) {
-    applications = JSON.parse(savedApplications);
-  }
-}
   renderApplications();
 
   companyInput.value = "";
